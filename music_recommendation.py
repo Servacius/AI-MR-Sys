@@ -17,9 +17,9 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=SPOTIFY_CLI
 
 def interpret_mood(mood):
     """
-    Use GeminiAI to interpret the user's mood and generate keywords
+    Use GeminiAI to interpret the user's reference and generate keywords
     """
-    prompt = f"Generate 10 music-related keywords for a {mood} mood."
+    prompt = f"Generate 10 music-related keywords based on this keyword : {mood}."
     model = genai.GenerativeModel("gemini-pro")
     response = model.generate_content(prompt)
     
@@ -46,11 +46,11 @@ def main():
     Main function to interact with the user and display recommendations.
     """
     print("Welcome to the AI-Based Music Recommendation System!")
-    mood = input("How are you feeling today? (e.g., happy, sad, energetic); ")
+    mood = input("What are you thinking today? => ")
     
-    print("Analyzing your mood...")
+    print("Analyzing your reference...")
     keywords = interpret_mood(mood)
-    print(f"Keywords: {', '.join(keywords)}")
+    print(f"Keywords:\n{', '.join(keywords)}")
     
     print("Fetching recommendations...")
     recommendations = get_recommendations(keywords)
